@@ -2,7 +2,13 @@
   "name": "12.bun-biome",
   "module": "index.ts",
   "type": "module",
+"scripts": {
+  "format": "bunx biome format ./src",
+  "lint": "bunx biome lint ./src",
+  "check": "bunx biome check ./src"
+},
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/bun": "latest"
   },
   "peerDependencies": {
