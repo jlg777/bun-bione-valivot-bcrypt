@@ -10,9 +10,14 @@ export const authSchema = object({
   password: PasswordSchema,
 });
 
+export enum Role {
+  "ADMIN"= "admin",
+  "USER" = "user"
+}
+
 export type User = InferInput<typeof authSchema> & {
   id: number;
-  role: 'admin' | 'user';
+  role: Role;
   refreshtoken: string;
 };
 
@@ -35,13 +40,23 @@ export const createUser = async (email: string, password: string): Promise<User>
     id: Date.now(), // Unique ID based on the timestamp
     email,
     password: hashedPassword,
-    role: 'user', // Default role is 'user'
+    role: Role.USER, // Default role is 'user'
     refreshtoken: '', // Placeholder for refresh token
   };
 
   // Store the new user in the Map
   users.set(email, newUser);
-
   // Return the created user
-  return newUser;
+  return newUser
+
 };
+
+/**
+ * Finds a new user by their given email
+ * 
+ * @param {string} - The email of the user to find.
+ * @return {User | undefined} = The user if found, otherwise undefined.
+ */
+export const findUserbyEmail = (email: string): User | undefined => {
+  return users.get(email)
+}
