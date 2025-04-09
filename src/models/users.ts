@@ -46,11 +46,9 @@ export const createUser = async (email: string, password: string): Promise<User>
 
   // Store the new user in the Map
   users.set(email, newUser);
+  // Return the created user
   return newUser
 
-
-  // Return the created user
-  return newUser;
 };
 
 /**
