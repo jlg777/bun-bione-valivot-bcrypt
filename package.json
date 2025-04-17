@@ -11,7 +11,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/bun": "latest",
-    "@types/jsonwebtoken": "^9.0.9"
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.14.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
