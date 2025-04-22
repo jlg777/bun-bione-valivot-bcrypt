@@ -24,6 +24,6 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
      // Include Node.js types
-     "types": ["node"]
+     "types": ["node", "bun"]
   }
 }

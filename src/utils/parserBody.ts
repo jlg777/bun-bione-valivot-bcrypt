@@ -18,6 +18,7 @@ export const parserBody = (req: IncomingMessage): Promise<any> => {
 
     req.on('data', (chunk) => {
       buffer += decoder.write(chunk)
+      //console.log(buffer)
     })
 
     req.on('end', () => {
