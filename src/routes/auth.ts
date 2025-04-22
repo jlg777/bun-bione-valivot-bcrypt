@@ -6,6 +6,7 @@ import {
   findUserbyEmail,
   HttpMethod,
   revokeUserToken,
+  users,
   validatePassword
 } from '../models'
 import { parserBody } from '../utils/parserBody'
@@ -68,7 +69,7 @@ export const authRouter = async (req: IncomingMessage, res: ServerResponse) => {
 
     try {
       const user = findUserbyEmail(email)
-
+      console.log(users)
       // If user does not exist, return a 401 Unauthorized response
       if (!user) {
         res.statusCode = 401
@@ -110,18 +111,23 @@ export const authRouter = async (req: IncomingMessage, res: ServerResponse) => {
 
   // User logout
   if (url == '/auth/logout' && method == HttpMethod.POST) {
+    //console.log('logout in',users)
     const token = req.headers['authorization']?.split(' ')[1]
-console.log(token)
     // Revoke token if available
     if (token) {
       addrevokeTokens(token)
     }
 
-    const formattedReq = req as AuthenticatedRequest
+    res.statusCode = 200
+      res.end(JSON.stringify({ message: 'Logout successful' }))
+
+    /*const formattedReq = req as AuthenticatedRequest
+    console.log(formattedReq.user.email)
 
     // If the user is authenticated, revoke their session
     if (formattedReq.user && typeof formattedReq.user == 'object' && 'id' in formattedReq.user) {
       const result = revokeUserToken(formattedReq.user.email)
+
       if (!result) {
         res.statusCode = 403
         res.end(JSON.stringify({ message: 'Forbidden' }))
@@ -133,6 +139,7 @@ console.log(token)
       // If the user is not authenticated, return a 400 Bad Request response
       res.statusCode = 400
       res.end(JSON.stringify({ message: 'User not authenticated' }))
-    }
+    }*/
+    //console.log('logout - out',users)
   }
 }

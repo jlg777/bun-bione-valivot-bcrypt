@@ -1,7 +1,7 @@
 const revokedTokens: Set<string> = new Set()
 
 export const addrevokeTokens = (token: string): void => {
-    console.log(revokedTokens)
+    //console.log('TKEN REVICADO',revokedTokens)
     revokedTokens.add(token)
 }
 

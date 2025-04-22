@@ -21,7 +21,7 @@ export type User = InferInput<typeof authSchema> & {
   refreshtoken: string | undefined;
 };
 
-const users: Map<string, User> = new Map();
+export const users: Map<string, User> = new Map();
 
 /**
  * Creates a new user with the given email and password.
@@ -72,7 +72,7 @@ export const findUserbyEmail = (email: string): User | undefined => users.get(em
 export const validatePassword = async (user: User, password: string): Promise<boolean> => {
   // Compara el texto plano de la contraseña con el hash almacenado
   const isValid = await compare(password, user.password);
-
+//console.log(users)
   if (isValid) {
     console.log("Contraseña válida.");
     return true;
