@@ -12,7 +12,7 @@ import { parserBody } from '../utils/parserBody'
 import { safeParse } from 'valibot'
 import { sign } from 'jsonwebtoken'
 import { config } from '../../config'
-import type { AuthenticatedRequest } from '../middlewares/authentications'
+import type { AuthenticatedRequest } from '../middlewares'
 
 /**
  * Handles the authentication routes for user registration, login, and logout.
@@ -26,7 +26,6 @@ export const authRouter = async (req: IncomingMessage, res: ServerResponse) => {
   if (url == '/auth/register' && method == HttpMethod.POST) {
     const body = await parserBody(req)
     const result = safeParse(authSchema, body)
-
     // If validation fails, return a 400 Bad Request response
     if (result.issues) {
       res.statusCode = 400
@@ -46,6 +45,13 @@ export const authRouter = async (req: IncomingMessage, res: ServerResponse) => {
     }
   }
 
+  if (url == '/auth' && method == HttpMethod.GET){
+    res.statusCode = 200
+    //console.log(res)
+    const body = await parserBody(req)
+    res.end(JSON.stringify({message: 'Auth Router'}))
+  }
+
   // User login
   if (url == '/auth/login' && method == HttpMethod.POST) {
     const body = await parserBody(req)
@@ -61,7 +67,7 @@ export const authRouter = async (req: IncomingMessage, res: ServerResponse) => {
     const { email, password } = body
 
     try {
-      const user = await findUserbyEmail(email)
+      const user = findUserbyEmail(email)
 
       // If user does not exist, return a 401 Unauthorized response
       if (!user) {
@@ -105,7 +111,7 @@ export const authRouter = async (req: IncomingMessage, res: ServerResponse) => {
   // User logout
   if (url == '/auth/logout' && method == HttpMethod.POST) {
     const token = req.headers['authorization']?.split(' ')[1]
-
+console.log(token)
     // Revoke token if available
     if (token) {
       addrevokeTokens(token)
